@@ -4,6 +4,10 @@ export const getAllArticles = () => {
   return apiGet('/articles');
 };
 
+export const getArticleById = (article_id) => {
+  return apiGet(`/articles/${article_id}`);
+};
+
 const api = (url, options = {}) => {
   return fetch(`${baseUrl}${url}`, { ...options })
     .then((response) => {
