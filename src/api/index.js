@@ -22,25 +22,3 @@ const apiGet = (url, options = {}) => {
 
   return api(`${url}${queryStr}`);
 };
-
-const apiPost = (url, body) => {
-  return api(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-};
-
-const apiPatch = (url, body) => {
-  return api(url, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-};
-
-const apiDelete = (url) => {
-  return api(url, {
-    method: 'DELETE',
-  });
-};
