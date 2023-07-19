@@ -16,6 +16,10 @@ export const getUserByUsername = (username) => {
   return apiGet(`/users/${username}`);
 };
 
+export const patchArticleById = (article_id, body) => {
+  return apiPatch(`/articles/${article_id}`, body);
+};
+
 const api = (url, options = {}) => {
   return fetch(`${baseUrl}${url}`, { ...options })
     .then((response) => {
@@ -39,4 +43,12 @@ const apiGet = (url, options = {}) => {
   }
 
   return api(`${url}${queryStr}`);
+};
+
+const apiPatch = (url, body) => {
+  return api(url, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
 };
