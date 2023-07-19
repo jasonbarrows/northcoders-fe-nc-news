@@ -20,12 +20,16 @@ const CommentList = ({ articleId }) => {
       <ul className="mt-2 sm:mt-4 flex flex-col space-y-2">
         {
           isLoading
-          ? <li className="p-2 sm:p-4 border-t">Loading...</li>
-          : comments.map((comment) => (
+          ? <li className="py-2 sm:py-4 border-t"><span>Loading...</span></li>
+          : comments
+            ? comments.map((comment) => (
               <li className="border-t" key={comment.comment_id}>
                 <CommentCard comment={comment} />
               </li>
             ))
+            : <li className="py-2 sm:py-4 border-t">
+                <p>Be the first to add a comment.</p>
+              </li>
           }
       </ul>
     </div>
