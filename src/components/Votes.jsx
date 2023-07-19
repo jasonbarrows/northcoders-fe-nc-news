@@ -3,7 +3,7 @@ const Votes = ({ count, userVote = 0, handleVote = () => {}}) => {
     <div className="border flex items-center rounded-full overflow-hidden">
       <button
         aria-label="Vote up"
-        className="p-1 text-rose-700 active:bg-rose-100"
+        className={`p-1 text-rose-700 active:bg-rose-100 ${userVote === 1 ? 'bg-rose-200' : null}`}
         onClick={() => {handleVote(1)}}
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="currentColor" className="w-5 h-5">
@@ -13,7 +13,7 @@ const Votes = ({ count, userVote = 0, handleVote = () => {}}) => {
       <span className="px-2">{count + userVote}</span>
       <button
         aria-label="Vote down"
-        className="p-1 text-rose-700 active:bg-rose-100"
+        className={`p-1 text-rose-700 active:bg-rose-100 ${userVote === -1 ? 'bg-rose-200' : null}`}
         onClick={() => {handleVote(-1)}}
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="currentColor" className="w-5 h-5">

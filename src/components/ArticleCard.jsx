@@ -10,14 +10,20 @@ const ArticleListCard = ({ article }) => {
   const [hasVoteError, setHasVoteError] = useState(false);
 
   const handleVote = (vote) => {
-    setUserVote(prev => prev + vote)
+    if (userVote === vote) {
+      vote = 0 - vote;
+    }
 
-    patchArticleById(article.article_id, { inc_votes: vote }).then((data) => {
-      setHasVoteError(false);
-    }).catch((err) => {
-      setHasVoteError(true);
-      setUserVote(prev => prev - vote);
-    });
+    if (userVote + vote <= 1 && userVote + vote >= -1) {
+      setUserVote(prev => prev + vote)
+
+      patchArticleById(article.article_id, { inc_votes: vote }).then((data) => {
+        setHasVoteError(false);
+      }).catch((err) => {
+        setHasVoteError(true);
+        setUserVote(prev => prev - vote);
+      });
+    }
   };
 
   return (
