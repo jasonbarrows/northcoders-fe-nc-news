@@ -6,10 +6,14 @@ import CommentCard from "./CommentCard";
 const CommentList = ({ articleId }) => {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     getAllCommentsByArticleId(articleId).then(({ comments }) => {
       setComments(comments);
+      setIsLoading(false);
+    }).catch((err) => {
+      setIsError(true);
       setIsLoading(false);
     });
   }, []);
@@ -21,15 +25,17 @@ const CommentList = ({ articleId }) => {
         {
           isLoading
           ? <li className="py-2 sm:py-4 border-t"><span>Loading...</span></li>
-          : comments
-            ? comments.map((comment) => (
-              <li className="border-t" key={comment.comment_id}>
-                <CommentCard comment={comment} />
-              </li>
-            ))
-            : <li className="py-2 sm:py-4 border-t">
-                <p>Be the first to add a comment.</p>
-              </li>
+          : isError
+            ? <li className="py-2 sm:py-4 border-t text-rose-700"><span>There was an error loading the comments.</span></li>
+            : comments
+              ? comments.map((comment) => (
+                <li className="border-t" key={comment.comment_id}>
+                  <CommentCard comment={comment} />
+                </li>
+              ))
+              : <li className="py-2 sm:py-4 border-t">
+                  <p>Be the first to add a comment.</p>
+                </li>
           }
       </ul>
     </div>

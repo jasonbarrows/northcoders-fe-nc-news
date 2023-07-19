@@ -19,7 +19,13 @@ export const getUserByUsername = (username) => {
 const api = (url, options = {}) => {
   return fetch(`${baseUrl}${url}`, { ...options })
     .then((response) => {
-      return response.status !== 204 ? response.json() : { success: true };
+      if (response.ok) {
+        return response.status !== 204 ? response.json() : { success: true };
+      } else {
+        return response.json().then((body) => {
+          return Promise.reject({ status: response.status, message: body.message });
+        })
+      }
     })
 };
 
