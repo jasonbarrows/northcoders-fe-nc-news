@@ -8,6 +8,14 @@ export const getArticleById = (article_id) => {
   return apiGet(`/articles/${article_id}`);
 };
 
+export const getAllCommentsByArticleId = (article_id) => {
+  return apiGet(`/articles/${article_id}/comments`);
+};
+
+export const getUserByUsername = (username) => {
+  return apiGet(`/users/${username}`);
+};
+
 const api = (url, options = {}) => {
   return fetch(`${baseUrl}${url}`, { ...options })
     .then((response) => {

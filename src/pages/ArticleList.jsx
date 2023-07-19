@@ -15,7 +15,7 @@ const ArticleList = () => {
 
   return (
     <div className="sm:my-8 sm:max-w-2xl mx-auto">
-      <h2 className="m-3 text-2xl sm:text-3xl font-medium">All Articles</h2>
+      <h2 className="my-2 mx-4 text-2xl sm:text-3xl font-medium">All Articles</h2>
       <ul className="flex flex-col space-y-2">
       {
         isLoading
