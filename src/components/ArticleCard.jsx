@@ -7,12 +7,12 @@ const ArticleListCard = ({ article }) => {
   return (
     <article className="mt-2 mb-1 mx-4 sm:mx-0 sm:p-8 sm:border sm:rounded-md sm:shadow-md sm:bg-white">
       <Link to={`/articles/${article.article_id}`}>
-        <div className="text-sm">
+        <div className="text-sm sm:text-base">
           <span className="font-semibold">{article.topic}</span>
           <span> • </span>
           <span className="text-neutral-400 font-light">{ago(article.created_at)}</span>
         </div>
-        <div className="text-sm">
+        <div className="text-sm sm:text-base">
           <span className="hidden sm:inline">Posted </span>
           <span>by </span>
           <span className="font-medium">{article.author}</span>
@@ -22,7 +22,7 @@ const ArticleListCard = ({ article }) => {
           <img className="h-20 sm:h-auto w-35 sm:w-full object-contain rounded-sm sm:rounded-md" src={article.article_img_url} alt="article.title" />
         </div>
       </Link>
-      <div className="mt-2 sm:mt-4 flex space-x-2 sm:space-x-4">
+      <div className="mt-2 sm:mt-4 flex items-center space-x-2 sm:space-x-4">
         <Votes count={article.votes} />
         <CommentCount count={article.comment_count} />
       </div>

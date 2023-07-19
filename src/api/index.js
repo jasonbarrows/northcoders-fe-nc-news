@@ -8,10 +8,24 @@ export const getArticleById = (article_id) => {
   return apiGet(`/articles/${article_id}`);
 };
 
+export const getAllCommentsByArticleId = (article_id) => {
+  return apiGet(`/articles/${article_id}/comments`);
+};
+
+export const getUserByUsername = (username) => {
+  return apiGet(`/users/${username}`);
+};
+
 const api = (url, options = {}) => {
   return fetch(`${baseUrl}${url}`, { ...options })
     .then((response) => {
-      return response.status !== 204 ? response.json() : { success: true };
+      if (response.ok) {
+        return response.status !== 204 ? response.json() : { success: true };
+      } else {
+        return response.json().then((body) => {
+          return Promise.reject({ status: response.status, message: body.message });
+        })
+      }
     })
 };
 
