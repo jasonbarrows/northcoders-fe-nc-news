@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getArticleById, updateArticleById } from "../api";
 import { ago } from "../utils";
 import Votes from "../components/Votes";
@@ -46,7 +46,7 @@ const Article = ({ user }) => {
           : (
             <>
               <div className="text-sm">
-                <span className="font-semibold">{article.topic}</span>
+                <Link to={`/topics/${article.topic}`}><span className="font-semibold">{article.topic}</span></Link>
                 <span> • </span>
                 <span className="text-neutral-400 font-light">{ago(article.created_at)}</span>
               </div>

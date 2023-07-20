@@ -15,9 +15,9 @@ const CommentList = ({ articleId, user }) => {
   useEffect(() => {
     getAllCommentsByArticleId(articleId).then(({ comments }) => {
       setComments(comments);
-      setIsLoading(false);
     }).catch((err) => {
       setHasLoadingError(true);
+    }).finally(() => {
       setIsLoading(false);
     });
   }, []);
@@ -44,7 +44,6 @@ const CommentList = ({ articleId, user }) => {
 
   return (
     <div className="m-4 sm:m-0 ">
-      {/* <h3 className="text-xl sm:text-2xl font-semibold">Comments</h3> */}
       <form className="" onSubmit={handleSubmit}>
         <label className="sm:text-lg font-semibold" htmlFor="newComment">Add a comment</label>
         <textarea
@@ -74,7 +73,9 @@ const CommentList = ({ articleId, user }) => {
       <ul className="mt-3 sm:mt-4 flex flex-col space-y-2">
         {
           isLoading
-          ? <li className="py-2 sm:py-4 border-t"><span>Loading...</span></li>
+          ? <li className="py-2 sm:py-4 border-t">
+            <span className="font-light">Loading...</span>
+          </li>
           : hasLoadingError
             ? <li className="py-2 sm:py-4 border-t text-rose-700"><span>There was an error loading the comments.</span></li>
             : comments
