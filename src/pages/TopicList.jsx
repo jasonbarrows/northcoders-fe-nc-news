@@ -18,7 +18,7 @@ const TopicList = () => {
   }, []);
 
   return (
-    <div className="mb-4 sm:my-8 sm:max-w-xl mx-auto">
+    <div className="mb-4 sm:my-8 sm:max-w-2xl mx-auto">
       <h2 className="my-2 sm:my-4 mx-4 text-2xl sm:text-3xl font-medium">Select a Topic</h2>
       <ul className="flex flex-col px-4 space-y-3 sm:space-y-4">
       {
