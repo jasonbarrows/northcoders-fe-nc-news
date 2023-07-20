@@ -1,21 +1,31 @@
 import { useEffect, useState } from "react";
 import { getAllArticles } from "../api";
 import ArticleCard from "../components/ArticleCard";
+import { useParams } from "react-router-dom";
 
 const ArticleList = () => {
+  const { slug } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    getAllArticles().then(({ articles }) => {
+    const query = new URLSearchParams;
+
+    if (slug) {
+      query.set('topic', slug);
+    }
+
+    getAllArticles(query).then(({ articles }) => {
       setArticles(articles);
       setIsLoading(false);
     });
-  }, []);
+  }, [slug]);
 
   return (
     <div className="mb-4 sm:my-8 sm:max-w-2xl mx-auto">
-      <h2 className="my-2 mx-4 text-2xl sm:text-3xl font-medium">All Articles</h2>
+      <h2 className="my-2 mx-4 text-2xl sm:text-3xl font-medium">{
+        slug || 'All Articles'
+      }</h2>
       <ul className="flex flex-col space-y-2">
       {
         isLoading
