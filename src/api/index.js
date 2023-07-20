@@ -1,5 +1,9 @@
 const baseUrl = 'https://nc-news-t20n.onrender.com/api';
 
+export const getAllTopics = () => {
+  return apiGet('/topics');
+};
+
 export const getAllArticles = () => {
   return apiGet('/articles');
 };

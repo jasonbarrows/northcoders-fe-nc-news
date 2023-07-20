@@ -1,10 +1,11 @@
+import { useEffect, useState } from "react";
+import { getUserByUsername } from "./api";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header"
 import ArticleList from "./pages/ArticleList";
-import Error from "./pages/Error";
 import Article from "./pages/Article";
-import { useEffect, useState } from "react";
-import { getUserByUsername } from "./api";
+import TopicList from "./pages/TopicList";
+import Error from "./pages/Error";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -25,6 +26,7 @@ function App() {
         <Route path="/" element={<ArticleList />} />
         <Route path="/articles" element={<ArticleList />} />
         <Route path="/articles/:article_id" element={<Article user={user} />} />
+        <Route path="/topics" element={<TopicList />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </>
