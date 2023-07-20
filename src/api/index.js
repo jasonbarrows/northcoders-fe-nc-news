@@ -16,8 +16,12 @@ export const getUserByUsername = (username) => {
   return apiGet(`/users/${username}`);
 };
 
-export const patchArticleById = (article_id, body) => {
+export const updateArticleById = (article_id, body) => {
   return apiPatch(`/articles/${article_id}`, body);
+};
+
+export const addUserCommentToArticle = (article_id, body) => {
+  return apiPost(`/articles/${article_id}/comments`, body);
 };
 
 const api = (url, options = {}) => {
@@ -43,6 +47,14 @@ const apiGet = (url, options = {}) => {
   }
 
   return api(`${url}${queryStr}`);
+};
+
+const apiPost = (url, body) => {
+  return api(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
 };
 
 const apiPatch = (url, body) => {

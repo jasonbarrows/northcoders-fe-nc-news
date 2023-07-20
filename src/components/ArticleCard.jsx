@@ -3,7 +3,7 @@ import { ago } from "../utils";
 import CommentCount from "./CommentCount";
 import Votes from "./Votes";
 import { useState } from "react";
-import { patchArticleById } from "../api";
+import { updateArticleById } from "../api";
 
 const ArticleListCard = ({ article }) => {
   const [userVote, setUserVote] = useState(0);
@@ -17,7 +17,7 @@ const ArticleListCard = ({ article }) => {
     if (userVote + vote <= 1 && userVote + vote >= -1) {
       setUserVote(prev => prev + vote)
 
-      patchArticleById(article.article_id, { inc_votes: vote }).then((data) => {
+      updateArticleById(article.article_id, { inc_votes: vote }).then((data) => {
         setHasVoteError(false);
       }).catch((err) => {
         setHasVoteError(true);
