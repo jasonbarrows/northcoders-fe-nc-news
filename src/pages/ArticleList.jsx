@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 const ArticleList = () => {
   const { slug } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [hasLoadingError, setHasLoadingError] = useState(false);
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -17,8 +18,11 @@ const ArticleList = () => {
 
     getAllArticles(query).then(({ articles }) => {
       setArticles(articles);
+    }).catch(() => {
+      setHasLoadingError(true);
+    }).finally(() => {
       setIsLoading(false);
-    });
+    });;
   }, [slug]);
 
   return (
@@ -30,8 +34,13 @@ const ArticleList = () => {
       {
         isLoading
         ? <li className="m-4">
-          <p className="font-light">Loading...</p></li>
-        : (
+          <p className="font-light">Loading...</p>
+        </li>
+        : hasLoadingError
+          ? <li className="m-4">
+            <span className="text-rose-700">There was an error loading the topics.</span>
+          </li>
+          : (
             articles.map((article) => {
               return (
                 <li className="border-t-4 sm:border-t-0" key={article.article_id}>
