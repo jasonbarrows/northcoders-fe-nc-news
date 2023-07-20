@@ -29,7 +29,7 @@ const CommentList = ({ articleId, user }) => {
 
     const requestBody = {
       username: user.username,
-      bodys: newComment,
+      body: newComment,
     };
 
     addUserCommentToArticle(articleId, requestBody).then((data) => {
