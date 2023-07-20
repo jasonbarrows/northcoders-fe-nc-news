@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getArticleById, patchArticleById } from "../api";
+import { getArticleById, updateArticleById } from "../api";
 import { ago } from "../utils";
 import Votes from "../components/Votes";
 import CommentCount from "../components/CommentCount";
 import CommentList from "../components/CommentList";
 
-const Article = () => {
+const Article = ({ user }) => {
   const { article_id } = useParams();
   const [article, setArticle] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +21,7 @@ const Article = () => {
     if (userVote + vote <= 1 && userVote + vote >= -1) {
       setUserVote(prev => prev + vote)
 
-      patchArticleById(article.article_id, { inc_votes: vote }).then((data) => {
+      updateArticleById(article.article_id, { inc_votes: vote }).then((data) => {
         setHasVoteError(false);
       }).catch((err) => {
         setHasVoteError(true);
@@ -39,7 +39,7 @@ const Article = () => {
 
   return (
     <div className="relative mx-auto sm:px-8 my-4 sm:my-8 grid grid-cols-1 lg:grid-cols-2 sm:gap-8 items-start">
-      <article className="lg:sticky lg:top-8 mx-4 sm:mx-0 sm:p-8 sm:max-w-7xl sm:border sm:rounded-md sm:shadow-md sm:bg-white">
+      <article className="mx-4 sm:mx-0 sm:p-8 sm:max-w-7xl sm:border sm:rounded-md sm:shadow-md sm:bg-white">
         {
           isLoading
           ? <p className="font-light">Loading...</p>
@@ -73,7 +73,7 @@ const Article = () => {
         }
       </article>
       <section id="comments" className="sm:p-8 sm:border sm:bg-white sm:rounded-md sm:shadow-md">
-        <CommentList articleId={article_id} />
+        <CommentList articleId={article_id} user={user} />
       </section>
     </div>
   )
