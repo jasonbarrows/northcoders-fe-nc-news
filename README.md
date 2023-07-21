@@ -13,8 +13,9 @@ The application has been implemented using React, React-Router and TailwindCSS.
 
 ### Back end
 
-The back-end repo for this project can be found at:
-https://github.com/jasonbarrows/northcoders-be-nc-news
+The back-end repo for this project can be found at https://github.com/jasonbarrows/northcoders-be-nc-news.
+
+The API along with a description of available endpoints can be found at https://nc-news-t20n.onrender.com/api/.
 
 ## Getting Started
 
