@@ -81,7 +81,7 @@ const CommentList = ({ articleId, user }) => {
             : comments
               ? comments.map((comment) => (
                 <li className="border-t" key={comment.comment_id}>
-                  <CommentCard comment={comment} />
+                  <CommentCard comment={comment} user={user} setComments={setComments} />
                 </li>
               ))
               : <li className="py-2 sm:py-4 border-t">
