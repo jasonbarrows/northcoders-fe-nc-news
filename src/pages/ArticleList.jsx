@@ -3,15 +3,18 @@ import { getAllArticles } from "../api";
 import ArticleCard from "../components/ArticleCard";
 import { useParams, useSearchParams } from "react-router-dom";
 import { RadioGroup } from '@headlessui/react';
+import Error from "../components/Error";
 
 const ArticleList = () => {
   const { slug } = useParams();
+  const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
-  const [hasLoadingError, setHasLoadingError] = useState(false);
+  // const [hasLoadingError, setHasLoadingError] = useState(false);
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
+    setError(null);
     const query = new URLSearchParams;
 
     if (slug) {
@@ -25,8 +28,11 @@ const ArticleList = () => {
 
     getAllArticles(combinedQuery).then(({ articles }) => {
       setArticles(articles);
-    }).catch(() => {
-      setHasLoadingError(true);
+    }).catch((err) => {
+      setError({
+        status: err.status,
+        message: err.message,
+      });
     }).finally(() => {
       setIsLoading(false);
     });
@@ -43,6 +49,18 @@ const ArticleList = () => {
       setSearchParams(searchParams);
     }
   };
+
+  if (isLoading) {
+    return <div className="py-4 sm:py-8 sm:max-w-2xl mx-auto">
+      <div className="mx-4">
+        <p className="font-light">Loading...</p>
+      </div>
+    </div>
+  }
+
+  if (error) {
+    return <Error status={error.status} message={error.message} />
+  }
 
   return (
     <div className="mb-4 sm:my-8 sm:max-w-2xl mx-auto">
@@ -90,24 +108,12 @@ const ArticleList = () => {
         </RadioGroup>
       </div>
       <ul className="mt-2 flex flex-col space-y-2">
-      {
-        isLoading
-        ? <li className="m-4">
-          <p className="font-light">Loading...</p>
-        </li>
-        : hasLoadingError
-          ? <li className="m-4">
-            <span className="text-rose-700">There was an error loading the topics.</span>
-          </li>
-          : (
-            articles.map((article) => {
-              return (
-                <li className="border-t-4 sm:border-t-0" key={article.article_id}>
-                  <ArticleCard article={article} />
-                </li>
-              );
-            })
-          )
+        {
+          articles.map((article) => (
+            <li className="border-t-4 sm:border-t-0" key={article.article_id}>
+              <ArticleCard article={article} />
+            </li>
+          ))
         }
       </ul>
     </div>

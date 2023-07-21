@@ -17,28 +17,34 @@ const TopicList = () => {
     });
   }, []);
 
+  if (isLoading) {
+    return <div className="py-4 sm:py-8 sm:max-w-2xl mx-auto">
+      <div className="mx-4">
+        <p className="font-light">Loading...</p>
+      </div>
+    </div>
+  }
+
+  if (hasLoadingError) {
+    return <div className="py-4 sm:py-8 sm:max-w-2xl mx-auto">
+      <div className="mx-4">
+        <span className="font-light">There was an error loading the topics.</span>
+      </div>
+    </div>;
+  }
+
   return (
-    <div className="mb-4 sm:my-8 sm:max-w-2xl mx-auto">
-      <h2 className="my-2 sm:my-4 mx-4 text-2xl sm:text-3xl font-medium">Select a Topic</h2>
-      <ul className="flex flex-col px-4 space-y-3 sm:space-y-4">
-      {
-        isLoading
-        ? <li>
-          <p className="font-light">Loading...</p>
-        </li>
-        : hasLoadingError
-          ? <li>
-            <span className="text-rose-700">There was an error loading the topics.</span>
-          </li>
-          : (
-            topics.map((topic) => {
-              return (
-                <li className="" key={topic.slug}>
-                  <TopicCard topic={topic} />
-                </li>
-              );
-            })
-          )
+    <div className="my-4 sm:my-8 sm:max-w-2xl mx-auto">
+      <h2 className="sm:my-4 mx-4 text-2xl sm:text-3xl font-medium">Select a Topic</h2>
+      <ul className="mt-2 flex flex-col px-4 space-y-3 sm:space-y-4">
+        {
+          topics.map((topic) => {
+            return (
+              <li className="" key={topic.slug}>
+                <TopicCard topic={topic} />
+              </li>
+            );
+          })
         }
       </ul>
     </div>
