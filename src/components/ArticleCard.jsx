@@ -41,7 +41,7 @@ const ArticleListCard = ({ article }) => {
       <Link to={`/articles/${article.article_id}`}>
         <div className="mt-1 w-full flex sm:flex-col justify-between sm:space-y-2">
           <p className="pr-1 sm:text-xl sm:font-medium">{article.title}</p>
-          <img className="h-20 sm:h-auto w-35 sm:w-full object-contain rounded-sm sm:rounded-md" src={article.article_img_url} alt="article.title" />
+          <img className="w-28 sm:w-full object-contain rounded-sm sm:rounded-md" src={article.article_img_url} alt="article.title" />
         </div>
       </Link>
       <div className="mt-2 sm:mt-4 flex items-center space-x-2 sm:space-x-4">
