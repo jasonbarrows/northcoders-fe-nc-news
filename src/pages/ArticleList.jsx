@@ -10,7 +10,6 @@ const ArticleList = () => {
   const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
-  // const [hasLoadingError, setHasLoadingError] = useState(false);
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
