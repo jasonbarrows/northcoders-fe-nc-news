@@ -30,6 +30,10 @@ export const addUserCommentToArticle = (article_id, body) => {
   return apiPost(`/articles/${article_id}/comments`, body);
 };
 
+export const deleteUserCommentById = (comment_id) => {
+  return apiDelete(`/comments/${comment_id}`);
+};
+
 const api = (url, options = {}) => {
   return fetch(`${baseUrl}${url}`, { ...options })
     .then((response) => {
@@ -68,5 +72,11 @@ const apiPatch = (url, body) => {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
+  });
+};
+
+const apiDelete = (url) => {
+  return api(url, {
+    method: 'DELETE',
   });
 };
