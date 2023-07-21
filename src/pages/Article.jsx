@@ -5,9 +5,11 @@ import { ago } from "../utils";
 import Votes from "../components/Votes";
 import CommentCount from "../components/CommentCount";
 import CommentList from "../components/CommentList";
+import Error from "../components/Error";
 
 const Article = ({ user }) => {
   const { article_id } = useParams();
+  const [error, setError] = useState(null);
   const [article, setArticle] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [userVote, setUserVote] = useState(0);
@@ -33,50 +35,60 @@ const Article = ({ user }) => {
   useEffect(() => {
     getArticleById(article_id).then(({ article }) => {
       setArticle(article);
+    }).catch((err) => {
+      setError({
+        status: err.status,
+        message: err.message,
+      });
+    }).finally(() => {
       setIsLoading(false);
     });
   }, []);
 
+  if (isLoading) {
+    return <div className="py-4 sm:py-8 sm:max-w-2xl mx-auto">
+      <div className="mx-4">
+        <p className="font-light">Loading...</p>
+      </div>
+    </div>
+  }
+
+  if (error) {
+    return <Error status={error.status} message={error.message} />
+  }
+
   return (
     <div className="relative mx-auto sm:px-8 my-4 sm:my-8 grid grid-cols-1 lg:grid-cols-2 sm:gap-8 items-start">
       <article className="mx-4 sm:mx-0 sm:p-8 sm:max-w-7xl sm:border sm:rounded-md sm:shadow-md sm:bg-white">
-        {
-          isLoading
-          ? <p className="font-light">Loading...</p>
-          : (
-            <>
-              <div className="text-sm">
-                <Link to={`/topics/${article.topic}`}><span className="font-semibold">{article.topic}</span></Link>
-                <span> • </span>
-                <span className="text-neutral-400 font-light">{ago(article.created_at)}</span>
-              </div>
-              <div className="text-sm">
-                <span>by </span>
-                <span className="font-medium">{article.author}</span>
-              </div>
-              <div className="mt-1.5 sm:mt-3 flex flex-col space-y-3 sm:space-y-4">
-                <h2 className="text-2xl sm:text-3xl font-semibold">{article.title}</h2>
-                <p>{article.body}</p>
-                <img className="h-auto w-full object-contain rounded-md" src={article.article_img_url} alt={article.title} />
-                <div className="pt-1 flex items-center space-x-2 sm:space-x-4">
-                  <Votes count={article.votes} userVote={userVote} handleVote={handleVote} />
-                  <CommentCount count={article.comment_count} />
-                </div>
-                {
-                  hasVoteError
-                  ? <p className="mt-1.5 text-rose-600 text-xs">There was an error applying your vote!</p>
-                  : null
-                }
-              </div>
-            </>
-          )
-        }
+        <div className="text-sm">
+          <Link to={`/topics/${article.topic}`}><span className="font-semibold">{article.topic}</span></Link>
+          <span> • </span>
+          <span className="text-neutral-400 font-light">{ago(article.created_at)}</span>
+        </div>
+        <div className="text-sm">
+          <span>by </span>
+          <span className="font-medium">{article.author}</span>
+        </div>
+        <div className="mt-1.5 sm:mt-3 flex flex-col space-y-3 sm:space-y-4">
+          <h2 className="text-2xl sm:text-3xl font-semibold">{article.title}</h2>
+          <p>{article.body}</p>
+          <img className="h-auto w-full object-contain rounded-md" src={article.article_img_url} alt={article.title} />
+          <div className="pt-1 flex items-center space-x-2 sm:space-x-4">
+            <Votes count={article.votes} userVote={userVote} handleVote={handleVote} />
+            <CommentCount count={article.comment_count} />
+          </div>
+          {
+            hasVoteError
+            ? <p className="mt-1.5 text-rose-600 text-xs">There was an error applying your vote!</p>
+            : null
+          }
+        </div>
       </article>
       <section id="comments" className="sm:p-8 sm:border sm:bg-white sm:rounded-md sm:shadow-md">
         <CommentList articleId={article_id} user={user} />
       </section>
     </div>
-  )
+  );
 };
 
 export default Article;

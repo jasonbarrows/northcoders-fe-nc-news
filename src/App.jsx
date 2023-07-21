@@ -5,7 +5,7 @@ import Header from "./components/Header"
 import ArticleList from "./pages/ArticleList";
 import Article from "./pages/Article";
 import TopicList from "./pages/TopicList";
-import Error from "./pages/Error";
+import Error from "./components/Error";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -28,7 +28,9 @@ function App() {
         <Route path="/articles/:article_id" element={<Article user={user} />} />
         <Route path="/topics" element={<TopicList />} />
         <Route path="/topics/:slug" element={<ArticleList />} />
-        <Route path="*" element={<Error />} />
+        <Route path="*" element={
+          <Error status="404 Not Found" message="The page you requested was not found."/>
+        } />
       </Routes>
     </>
   )

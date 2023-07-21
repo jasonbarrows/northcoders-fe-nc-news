@@ -42,7 +42,7 @@ const api = (url, options = {}) => {
       } else {
         return response.json().then((body) => {
           return Promise.reject({ status: response.status, message: body.message });
-        })
+        });
       }
     })
 };
